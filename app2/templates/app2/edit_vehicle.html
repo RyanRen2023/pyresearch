@@ -1,0 +1,130 @@
+{% extends "app2/layout.html" %}
+
+{% block title %}Edit Vehicle{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">Edit Vehicle</h2>
+
+            <!-- Edit Vehicle Form -->
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <!-- Column 1 -->
+                    <div class="col-md-4 mx-auto">
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.model_year.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.model_year }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.make.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.make }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.model.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.model }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.vehicle_class.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.vehicle_class }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.engine_size.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.engine_size }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div class="col-md-4 mx-auto">
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.cylinders.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.cylinders }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.transmission.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.transmission }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.fuel_type.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.fuel_type }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.city_fuel_efficiency.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.city_fuel_efficiency }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.highway_fuel_efficiency.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.highway_fuel_efficiency }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div class="col-md-4 mx-auto">
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.combined_fuel_efficiency.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.combined_fuel_efficiency }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.combined_mpg.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.combined_mpg }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.co2_emissions.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.co2_emissions }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.co2_rating.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.co2_rating }}
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-md-4 col-form-label">{{ form.smog_rating.label_tag }}</label>
+                            <div class="col-md-8">
+                                {{ form.smog_rating }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'vehicle_list' %}" class="btn btn-secondary">Back to vehicle list</a>
+                    <button type="submit" class="btn btn-primary">Update Vehicle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

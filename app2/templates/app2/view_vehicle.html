@@ -1,0 +1,125 @@
+{% extends "app2/layout.html" %}
+
+{% block title %}View Vehicle{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mb-4">Vehicle Details</h2>
+
+            <!-- View Vehicle Details -->
+            <div class="row">
+                <!-- Column 1 -->
+                <div class="col-md-4 mx-auto">
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Model Year:</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.model_year }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Make:</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.make }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Model:</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.model }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Vehicle Class:</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.vehicle_class }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Engine Size (L):</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.engine_size_l }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="col-md-4 mx-auto">
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Cylinders:</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.cylinders }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Transmission:</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.transmission }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Fuel Type:</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.fuel_type }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">City Fuel Efficiency (L/100km):</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.city_l_per_100km }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Highway Fuel Efficiency (L/100km):</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.highway_l_per_100km }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 3 -->
+                <div class="col-md-4 mx-auto">
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Combined Fuel Efficiency (L/100km):</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.combined_l_per_100km }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Combined MPG:</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.combined_mpg }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">CO2 Emissions (g/km):</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.co2_emissions_g_per_km }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">CO2 Rating:</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.co2_rating }}</p>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-md-4 col-form-label">Smog Rating:</label>
+                        <div class="col-md-8">
+                            <p class="form-control-plaintext">{{ vehicle.smog_rating }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Back Button -->
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{% url 'vehicle_list' %}" class="btn btn-secondary">Back to vehicle list</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

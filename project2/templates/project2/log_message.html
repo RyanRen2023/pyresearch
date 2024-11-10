@@ -1,0 +1,15 @@
+{% extends "project2/layout.html" %}
+{% block title %}
+Log Message
+{% endblock %}
+{% block content %}
+<!-- <form method="post" class="log-form" action="{% url 'log' %}"> -->
+<form method="post" class="log-form">
+
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label for="message">Message:</label>
+    <input type="text" name="message" id="message">
+    <br>
+    <button type="submit" value="save btn btn-default">Log</button>
+{% endblock %}

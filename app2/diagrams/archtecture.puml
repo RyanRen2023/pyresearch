@@ -1,0 +1,32 @@
+@startuml "Multi-layer Application Architecture"
+component "Web Browser" as WB
+
+package "Presentation Layer" {
+    component "Html Templates" as WT
+}
+
+package "Controller Layer" {
+    component "urls.py" as WA
+    component "views.py" as WV
+    component "forms.py" as WF
+    component "dto.py" as WD
+}
+
+
+package "Data Layer" {
+    component "models.py" as WM
+    component "file_io.py" as WFI
+    component "vehicle.csv" as DB 
+}
+
+WB -down-> WA
+WA -down-> WV
+WV -up-> WT
+WT -up-> WB
+WV -down-> WD
+WV -right-> WF
+WF -down-> WM
+WV -down-> WFI
+WFI -up-> WD
+WFI -down-> DB
+@enduml
