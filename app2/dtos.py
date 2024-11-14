@@ -4,7 +4,7 @@ class VehicleInfoDTO:
     """
     Class to represent a vehicle information record. created by Xihai Ren
     """
-    def __init__(self,row_id, model_year, make, model, vehicle_class, engine_size_l, cylinders, transmission, fuel_type,
+    def __init__(self,row_id, model_year, make, model, vehicle_class, engine_size, cylinders, transmission, fuel_type,
                  city_l_per_100km, highway_l_per_100km, combined_l_per_100km, combined_mpg, co2_emissions_g_per_km,
                  co2_rating, smog_rating):
         """
@@ -15,7 +15,7 @@ class VehicleInfoDTO:
         self._make = make
         self._model = model
         self._vehicle_class = vehicle_class
-        self._engine_size_l = engine_size_l
+        self._engine_size = engine_size
         self._cylinders = cylinders
         self._transmission = transmission
         self._fuel_type = fuel_type
@@ -64,11 +64,11 @@ class VehicleInfoDTO:
         return self._vehicle_class
 
     @property
-    def engine_size_l(self):
+    def engine_size(self):
         """
         Method to get the engine size. created by Xihai Ren
         """
-        return self._engine_size_l
+        return self._engine_size
 
     @property
     def cylinders(self):
@@ -92,21 +92,21 @@ class VehicleInfoDTO:
         return self._fuel_type
 
     @property
-    def city_l_per_100km(self):
+    def city_fuel_efficiency(self):
         """
         Method to get the city fuel consumption. created by Xihai Ren
         """
         return self._city_l_per_100km
 
     @property
-    def highway_l_per_100km(self):
+    def highway_fuel_efficiency(self):
         """
         Method to get the highway fuel consumption. created by Xihai Ren
         """
         return self._highway_l_per_100km
 
     @property
-    def combined_l_per_100km(self):
+    def combined_fuel_efficiency(self):
         """
         Method to get the combined fuel consumption. created by Xihai Ren
         """
@@ -120,7 +120,7 @@ class VehicleInfoDTO:
         return self._combined_mpg
 
     @property
-    def co2_emissions_g_per_km(self):
+    def co2_emissions(self):
         """    
             Method to get the CO2 emissions. created by Xihai Ren
         """
@@ -176,12 +176,12 @@ class VehicleInfoDTO:
         """
         self._vehicle_class = value
 
-    @engine_size_l.setter
-    def engine_size_l(self, value):
+    @engine_size.setter
+    def engine_size(self, value):
         """
         Method to set the engine size. created by Xihai Ren
         """
-        self._engine_size_l = value
+        self._engine_size = value
 
     @cylinders.setter
     def cylinders(self, value):
@@ -204,22 +204,22 @@ class VehicleInfoDTO:
         """
         self._fuel_type = value
 
-    @city_l_per_100km.setter
-    def city_l_per_100km(self, value):
+    @city_fuel_efficiency.setter
+    def city_fuel_efficiency(self, value):
         """
         Method to set the city fuel consumption. created by Xihai Ren
         """
         self._city_l_per_100km = value
 
-    @highway_l_per_100km.setter
-    def highway_l_per_100km(self, value):
+    @highway_fuel_efficiency.setter
+    def highway_fuel_efficiency(self, value):
         """
         Method to set the highway fuel consumption. created by Xihai Ren
         """
         self._highway_l_per_100km = value
 
-    @combined_l_per_100km.setter
-    def combined_l_per_100km(self, value):
+    @combined_fuel_efficiency.setter
+    def combined_fuel_efficiency(self, value):
         """
         Method to set the combined fuel consumption. created by Xihai Ren
         """
@@ -232,8 +232,8 @@ class VehicleInfoDTO:
         """
         self._combined_mpg = value
 
-    @co2_emissions_g_per_km.setter
-    def co2_emissions_g_per_km(self, value):
+    @co2_emissions.setter
+    def co2_emissions(self, value):
         """
         Method to set the CO2 emissions. created by Xihai Ren
         """
@@ -261,7 +261,7 @@ class VehicleInfoDTO:
         print(f"Make: {self._make}")
         print(f"Model: {self._model}")
         print(f"Vehicle Class: {self._vehicle_class}")
-        print(f"Engine Size (L): {self._engine_size_l}")
+        print(f"Engine Size (L): {self._engine_size}")
         print(f"Cylinders: {self._cylinders}")
         print(f"Transmission: {self._transmission}")
         print(f"Fuel Type: {self._fuel_type}")

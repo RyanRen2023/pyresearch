@@ -8,13 +8,20 @@
 <form method="post">
     {% csrf_token %}
 </form>
+
+<!-- Switch Storage Button-->
+<div class="form-check form-switch mb-3">
+    <input class="form-check-input" type="checkbox" id="storageSwitch" {% if storage_method == 'database' %} checked {% endif %} onchange="toggleStorage()">
+    <label class="form-check-label" for="storageSwitch">Switch to Database</label>
+</div>
+
 <!-- Add Vehicle Button -->
 <div class="text-end mb-3">
     <a href="{% url 'add_vehicle' %}" class="btn btn-success">Add Vehicle</a>
     <!-- Export Button with confirmation -->
     <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#confirmExportModal">Export to CSV</button>
     <!-- Reload Button -->
-    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#confirmReloadModal">Reload Data</button>
+    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#confirmReloadModal">Reload Data from CSV</button>
 </div>
 
 <!-- Vehicle Table -->
@@ -28,15 +35,6 @@
             <th>Vehicle Class</th>
             <th>Engine Size</th>
             <th>Cylinders</th>
-            <!-- <th>transmission</th>
-            <th>fuel_type</th>
-            <th>city_fuel_efficiency</th>
-            <th>highway_fuel_efficiency</th>
-            <th>combined_fuel_efficiency</th>
-            <th>combined_mpg</th>
-            <th>co2_emissions</th>
-            <th>co2_rating</th>
-            <th>smog_rating</th> -->
             <th>Actions</th>
         </tr>
     </thead>
@@ -49,17 +47,8 @@
             <td>{{ vehicle.make }}</td>
             <td>{{ vehicle.model }}</td>
             <td>{{ vehicle.vehicle_class }}</td>
-            <td>{{ vehicle.engine_size_l }}</td>
+            <td>{{ vehicle.engine_size }}</td>
             <td>{{ vehicle.cylinders }}</td>
-            <!-- <td>{{ vehicle.transmission }}</td>
-            <td>{{ vehicle.fuel_type }}</td>
-            <td>{{ vehicle.city_l_per_100km }}</td>
-            <td>{{ vehicle.highway_l_per_100km }}</td>
-            <td>{{ vehicle.combined_l_per_100km }}</td>
-            <td>{{ vehicle.combined_mpg }}</td>
-            <td>{{ vehicle.co2_emissions_g_per_km }}</td>
-            <td>{{ vehicle.co2_rating }}</td>
-            <td>{{ vehicle.smog_rating }}</td>             -->
             <td>
                 <a href="{% url 'view_vehicle' vehicle.row_id %}" class="btn btn-sm btn-info">View</a>
                 <a href="{% url 'edit_vehicle' vehicle.row_id %}" class="btn btn-sm btn-warning">Edit</a>
@@ -206,8 +195,31 @@
 
 {% endblock %}
 
-{% block scripts %} 
+{% block scripts %}
 <script>
+    // JavaScript to toggle the storage method
+    function toggleStorage() {
+        fetch("{% url 'toggle_storage_method' %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Storage method has been switched successfully!');
+                    window.location.reload();
+                } else {
+                    console.error(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                alert('An error occurred while switching storage method. Please try again.');
+            });
+    }
     // JavaScript to handle reload confirmation and success modals
     document.getElementById('confirmReloadButton').addEventListener('click', function () {
 

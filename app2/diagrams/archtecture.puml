@@ -16,7 +16,8 @@ package "Controller Layer" {
 package "Data Layer" {
     component "models.py" as WM
     component "file_io.py" as WFI
-    component "vehicle.csv" as DB 
+    component "vehicle.csv" as File_DB 
+    component "Sqlite3" as DB            
 }
 
 WB -down-> WA
@@ -28,5 +29,6 @@ WV -right-> WF
 WF -down-> WM
 WV -down-> WFI
 WFI -up-> WD
-WFI -down-> DB
+WFI -down-> File_DB
+WM -down-> DB
 @enduml

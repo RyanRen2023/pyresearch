@@ -27,7 +27,7 @@ def load_data_from_csv(file_path, limit=None):
                     make=row['Make'],
                     model=row['Model'],
                     vehicle_class=row['Vehicle class'],
-                    engine_size_l=row['Engine size (L)'],
+                    engine_size=row['Engine size (L)'],
                     cylinders=row['Cylinders'],
                     transmission=row['Transmission'],
                     fuel_type=row['Fuel type'],
@@ -75,9 +75,9 @@ def export_data_to_csv(file_path, vehicles):
             for vehicle in vehicles:
                 writer.writerow([
                     vehicle.model_year, vehicle.make, vehicle.model, vehicle.vehicle_class,
-                    vehicle.engine_size_l, vehicle.cylinders, vehicle.transmission,
-                    vehicle.fuel_type, vehicle.city_l_per_100km, vehicle.highway_l_per_100km,
-                    vehicle.combined_l_per_100km, vehicle.combined_mpg, vehicle.co2_emissions_g_per_km,
+                    vehicle.engine_size, vehicle.cylinders, vehicle.transmission,
+                    vehicle.fuel_type, vehicle.city_fuel_efficiency, vehicle.highway_fuel_efficiency,
+                    vehicle.combined_fuel_efficiency, vehicle.combined_mpg, vehicle.co2_emissions,
                     vehicle.co2_rating, vehicle.smog_rating
                 ])
 

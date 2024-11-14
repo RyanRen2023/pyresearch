@@ -1,0 +1,29 @@
+@startuml 'Sequence Diagram'
+title "Reuqest Process Sequence Diagram"
+actor User
+participant "Web Browser" as WB
+participant "urls.py" as WA
+participant "views.py" as WV
+participant "Html Templates" as WT
+participant "forms.py" as WF
+participant "models.py" as WM
+participant "Sqlite3" as DB
+
+
+User -> WB: Request
+WB -> WA: Request
+WA -> WV: Request  
+
+WV -> WF: Request
+WF -> WM: Request
+WM -> DB: Request
+
+DB --> WM: Response
+WM --> WF: Response
+WF --> WV: Response
+
+WV -> WT: Request
+WV --> WB: Response
+WB --> User: Response
+
+@enduml

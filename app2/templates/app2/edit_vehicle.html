@@ -12,6 +12,10 @@
             <form method="post">
                 {% csrf_token %}
 
+                <!-- Hidden Field for row_id -->
+                {{ form.row_id }}
+
+
                 <div class="row">
                     <!-- Column 1 -->
                     <div class="col-md-4 mx-auto">

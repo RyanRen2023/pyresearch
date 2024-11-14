@@ -8,8 +8,12 @@ class VehicleForm(forms.ModelForm):
     class Meta:
         model = Vehicle
         fields = [
-            'model_year', 'make', 'model', 'vehicle_class', 'engine_size',
+            'row_id','model_year', 'make', 'model', 'vehicle_class', 'engine_size',
             'cylinders', 'transmission', 'fuel_type', 'city_fuel_efficiency', 
             'highway_fuel_efficiency', 'combined_fuel_efficiency', 'combined_mpg', 
             'co2_emissions', 'co2_rating', 'smog_rating'
         ]
+
+        widgets = {
+            'row_id': forms.HiddenInput(),
+        }
