@@ -10,6 +10,6 @@ urlpatterns = [
     path('reload/', views.reload_vehicles_from_csv, name='reload_vehicles_from_csv'),
     path('view/<int:row_id>/', views.view_vehicle, name='view_vehicle'),  
     path('toggle_storage_method', views.toggle_storage_method, name='toggle_storage_method'),  
-
+    path('charts/', views.charts, name='charts'),
 
 ]

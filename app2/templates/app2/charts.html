@@ -1,0 +1,154 @@
+<!-- 
+Module: chart.html
+Author: Xihai Ren
+Date: 2024-11-28
+Description: HTML template for displaying vehicle statistics using Chart.js.
+-->
+
+{% extends "app2/layout.html" %}
+
+{% block title %}Vehicle Charts{% endblock %}
+
+{% block content %}
+<!-- Dropdown for selecting statistical dimension -->
+<div class="container">
+    <h2>Select a Dimension to View Statistics</h2>
+    <select id="stat-dimension" class="form-control">
+        <option value="vehicle_class">Vehicle Class</option>
+        <option value="make">Manufacturer</option>
+        <option value="model_year">Model Year</option>
+        <option value="fuel_type">Fuel Type</option>
+    </select>
+</div>
+
+<!-- Canvas for Pie Chart -->
+<div id="chart-container" class="mx-auto" style="width: 75%; margin-top: 20px;">
+    <canvas id="pie-chart"></canvas>
+</div>
+
+<!-- Canvas for Bar Chart -->
+<div id="bar-chart-container" class="mx-auto" style="width: 75%; margin-top: 20px;">
+    <canvas id="bar-chart"></canvas>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+
+<script>
+    // Define color palette for chart sections
+    const CHART_COLORS = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+    };
+
+    // Function to fetch data based on the selected dimension from the dropdown
+    function fetchChartData(dimension) {
+        // Send a request to fetch data for the selected dimension
+        fetch(`/charts/?dimension=${dimension}`)
+            .then(response => response.json())  // Parse the JSON response
+            .then(data => {
+                // Update the charts with the new data
+                updateChart(data.labels, data.counts);
+            })
+            .catch(error => console.error('Error fetching chart data:', error));  // Handle errors
+    }
+
+    // Initialize the chart variables
+    let pieChart, barChart;
+
+    // Function to update both pie and bar charts with new data
+    function updateChart(labels, counts) {
+        const chartData = {
+            labels: labels,  // Labels for the chart (e.g., vehicle classes, make, etc.)
+            datasets: [{
+                label: 'Vehicle Statistics',
+                data: counts,  // Data counts corresponding to the labels
+                backgroundColor: Object.values(CHART_COLORS).slice(0, labels.length),  // Color for each segment/bar
+            }]
+        };
+
+        // Pie chart configuration
+        const pieConfig = {
+            type: 'pie',  // Chart type is pie
+            data: chartData,
+            options: {
+                responsive: true,  // Make the chart responsive
+                plugins: {
+                    legend: { position: 'bottom' },  // Position the legend at the bottom
+                    title: { display: true, text: 'Vehicle Type Distribution' },  // Title for the chart
+                    datalabels: {
+                        color: '#fff',  // Data label color
+                        font: { weight: 'bold', size: 16 },  // Font settings for labels
+                        formatter: (value, context) => {
+                            let percentage = (value / context.dataset._meta[0].total * 100).toFixed(2);
+                            return `${percentage}%`;  // Show percentage on data labels
+                        },
+                        anchor: 'end',  // Anchor the data labels to the end
+                        align: 'center'  // Align data labels in the center
+                    }
+                }
+            }
+        };
+
+        // Bar chart configuration
+        const barConfig = {
+            type: 'bar',  // Chart type is bar
+            data: chartData,
+            options: {
+                responsive: true,  // Make the chart responsive
+                plugins: {
+                    legend: { position: 'bottom' },  // Position the legend at the bottom
+                    title: { display: true, text: 'Vehicle Type Distribution (Bar)' },  // Title for the bar chart
+                    datalabels: {
+                        color: '#fff',  // Data label color
+                        font: { weight: 'bold', size: 16 },  // Font settings for labels
+                        formatter: (value, context) => {
+                            let percentage = (value / context.dataset._meta[0].total * 100).toFixed(2);
+                            return `${percentage}%`;  // Show percentage on data labels
+                        },
+                        anchor: 'end',  // Anchor the data labels to the end
+                        align: 'center'  // Align data labels in the center
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true }  // Ensure the y-axis starts from 0
+                }
+            }
+        };
+
+        // If pie chart exists, destroy it before creating a new one
+        if (pieChart) {
+            pieChart.destroy();
+        }
+        // If bar chart exists, destroy it before creating a new one
+        if (barChart) {
+            barChart.destroy();
+        }
+
+        // Create Pie Chart
+        const pieCtx = document.getElementById('pie-chart').getContext('2d');
+        pieChart = new Chart(pieCtx, pieConfig);
+
+        // Create Bar Chart
+        const barCtx = document.getElementById('bar-chart').getContext('2d');
+        barChart = new Chart(barCtx, barConfig);
+    }
+
+    // Event listener for the dropdown selection
+    document.getElementById('stat-dimension').addEventListener('change', function (e) {
+        const selectedDimension = e.target.value;  // Get the selected dimension
+        fetchChartData(selectedDimension);  // Fetch new data based on the selected dimension
+    });
+
+    // Initially load the data for the default dimension (vehicle_class)
+    fetchChartData('vehicle_class');  // Default dimension (can be adjusted)
+</script>
+{% endblock %}

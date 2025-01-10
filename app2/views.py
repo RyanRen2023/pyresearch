@@ -1,3 +1,10 @@
+"""
+Module: views.py
+Author: Xihai Ren
+Date: 2024-11-28
+Description: Handles the chart data preparation and response for Practical Project Part 4.
+"""
+from collections import defaultdict
 from django.shortcuts import render, redirect
 from .forms import VehicleForm
 from .file_io import load_data_from_csv, export_data_to_csv
@@ -335,7 +342,7 @@ def reload_vehicles_from_csv(request):
     if storage_method == 'database':
         Vehicle.objects.all().delete()
         save_vehicle_data_to_db(vehicle_data)
-    
+
     next_id = len(vehicle_data)
     # Return a JSON response to indicate success
     return JsonResponse({"status": "success", "message": "Data reloaded successfully"})
@@ -360,3 +367,57 @@ def view_vehicle(request, row_id):
 
     vehicle = vehicle_data[index]
     return render(request, 'app2/view_vehicle.html', {'vehicle': vehicle})
+
+
+def charts(request):
+    """
+    Displays charts of the vehicle data.
+
+    Args:
+        request (HttpRequest): The HTTP request object.
+
+    Returns:
+        HttpResponse: The rendered charts page.
+    """
+    global vehicle_data
+
+    if not vehicle_data:  # If the data is not already loaded into memory
+        # Load CSV data into memory (only if vehicle_data is empty)
+        vehicle_data = load_vehicle_data()
+
+    # Count the number of vehicles in each vehicle class
+    # class_counts = {}
+    # for vehicle in vehicle_data:
+    #     if vehicle.vehicle_class in class_counts:
+    #         class_counts[vehicle.vehicle_class] += 1
+    #     else:
+    #         class_counts[vehicle.vehicle_class] = 1
+
+    # Get the selected dimension from the request parameters (default to 'vehicle_class')
+    dimension = request.GET.get('dimension', None)
+    is_ajax = False
+    if dimension:
+        is_ajax = True
+    else:
+        dimension = 'vehicle_class'
+
+    # Create a dictionary to count the occurrences of the selected dimension
+    class_counts = defaultdict(int)
+
+    for vehicle in vehicle_data:
+        # Get the value of the selected dimension (vehicle_class, make, model_year, etc.)
+        dimension_value = getattr(vehicle, dimension, None)
+        if dimension_value:
+            class_counts[dimension_value] += 1
+
+    # Prepare the data for the pie chart
+    labels = list(class_counts.keys())
+    counts = list(class_counts.values())
+
+    # Check if the request is AJAX
+    if is_ajax:
+        # Return JSON data if the request is AJAX
+        return JsonResponse({'labels': labels, 'counts': counts})
+
+    # Render the full page with the chart if it's a normal request
+    return render(request, 'app2/charts.html', {'class_counts': counts, 'labels': labels})
