@@ -36,11 +36,6 @@ This project is a Django-based application that provides CRUD operations for man
 ---
 
 
- 
-
- 2.	Generate Coverage Report:
-	•	Use Django’s testing tools to ensure coverage for all CRUD operations and storage modes.
-
 
 
 
